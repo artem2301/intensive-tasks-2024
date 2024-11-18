@@ -14,15 +14,35 @@ package com.walking.intensive.chapter1.task1;
  */
 public class Task1 {
     public static void main(String[] args) {
-//        Для собственных проверок можете делать любые изменения в этом методе
         int age = 0;
 
         System.out.println(getAgeString(age));
     }
 
     static String getAgeString(int age) {
-//        Место для вашего кода
+        if (age < 0) {
+            return "Некорректный ввод";
+        }
 
-        return null; // Заглушка. При реализации - удалить
+        String suffix;
+
+        int tempAge = age % 100;
+
+        if (tempAge > 14) {
+            tempAge %= 10;
+        }
+
+        switch (tempAge) {
+            case 1:
+                suffix = "год";
+                break;
+            case 2, 3, 4:
+                suffix = "года";
+                break;
+            default:
+                suffix = "лет";
+        }
+
+        return "Вам " + age + " " + suffix;
     }
 }
