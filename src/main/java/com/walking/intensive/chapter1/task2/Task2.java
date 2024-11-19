@@ -33,11 +33,11 @@ package com.walking.intensive.chapter1.task2;
  */
 public class Task2 {
     public static void main(String[] args) {
-        System.out.println(getFlatLocation(10, 10, 55));
+        System.out.println(getFlatLocation(2, 2, 0));
     }
 
     static String getFlatLocation(int floorAmount, int entranceAmount, int flatNumber) {
-        if (floorAmount < 0 || entranceAmount < 0 || flatNumber < 0) {
+        if (floorAmount < 1 || entranceAmount < 1 || flatNumber < 1) {
             return "Некорректные входные данные";
         }
 
