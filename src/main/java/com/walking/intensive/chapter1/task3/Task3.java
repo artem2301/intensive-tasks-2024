@@ -25,7 +25,7 @@ package com.walking.intensive.chapter1.task3;
  */
 public class Task3 {
     public static void main(String[] args) {
-        int year = 2025;
+        int year = 2023;
 
         if (isLeap(year)) {
             System.out.println("Год " + year + " - високосный");
@@ -39,14 +39,10 @@ public class Task3 {
             return false;
         }
 
-        if (year % 4 == 0) {
-            if (year % 100 != 0) {
-                return true;
-            }
-
-            return year % 400 == 0;
+        if (year % 100 == 0) {
+            return (year % 400 == 0);
         }
 
-        return false;
+        return (year % 4 == 0);
     }
 }
