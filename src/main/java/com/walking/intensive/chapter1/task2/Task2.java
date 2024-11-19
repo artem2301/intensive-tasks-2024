@@ -32,10 +32,8 @@ package com.walking.intensive.chapter1.task2;
  * <p><a href="https://github.com/KFalcon2022/intensive-tasks-2024/blob/master/README.md">Требования к оформлению</a>
  */
 public class Task2 {
-    private static final int COUNT_FLATS_ON_FLOOR = 4;
-
     public static void main(String[] args) {
-        System.out.println(getFlatLocation(10, 10, 23));
+        System.out.println(getFlatLocation(10, 10, 55));
     }
 
     static String getFlatLocation(int floorAmount, int entranceAmount, int flatNumber) {
@@ -43,13 +41,15 @@ public class Task2 {
             return "Некорректные входные данные";
         }
 
-        if (flatNumber > (COUNT_FLATS_ON_FLOOR * floorAmount * entranceAmount)) {
+        int countFlatsOnFloor = 4;
+
+        if (flatNumber > (countFlatsOnFloor * floorAmount * entranceAmount)) {
             return "Такой квартиры не существует";
         }
 
         // Узнаем подъезд
 
-        int floorCounts = COUNT_FLATS_ON_FLOOR * floorAmount;
+        int floorCounts = countFlatsOnFloor * floorAmount;
         int nEntrance = flatNumber / floorCounts;
 
         if (flatNumber % floorAmount != 0) {
@@ -58,36 +58,28 @@ public class Task2 {
 
         // Узнаем этаж
 
-        int nFloor = (flatNumber - ((nEntrance - 1) * floorCounts)) / 4;
+        int nFloor = (int) Math.ceil((flatNumber - ((nEntrance - 1) * floorCounts)) / 4.0);
 
-        // Узнаем направление относительно лифта
+        // Узнаем направление
 
         String elevatorPosition;
 
-        int floorIndex = flatNumber % COUNT_FLATS_ON_FLOOR;
-
-        switch (floorIndex) {
-            case 1, 2:
-                elevatorPosition = "слева";
+        switch (flatNumber % countFlatsOnFloor) {
+            case 1:
+                elevatorPosition = "слева от лифта, влево";
+                break;
+            case 2:
+                elevatorPosition = "слева от лифта, вправо";
+                break;
+            case 3:
+                elevatorPosition = "справа от лифта, влево";
                 break;
             default:
-                elevatorPosition = "справа";
-        }
-
-        // Узнаем сторону квартиры
-
-        String flatPosition;
-
-        if (elevatorPosition.equals("слева") && (floorIndex == 1)
-                || (elevatorPosition.equals("справа") && (floorIndex == 3))) {
-            flatPosition = "влево";
-        } else {
-            flatPosition = "вправо";
+                elevatorPosition = "справа от лифта, вправо";
         }
 
         return flatNumber + " кв - " + nEntrance + " подъезд, "
                 + nFloor + " этаж, "
-                + elevatorPosition + " от лифта, "
-                + flatPosition;
+                + elevatorPosition;
     }
 }
