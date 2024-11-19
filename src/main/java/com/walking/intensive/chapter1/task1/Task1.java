@@ -24,13 +24,13 @@ public class Task1 {
             return "Некорректный ввод";
         }
 
-        String suffix;
-
         int tempAge = age % 100;
 
         if (tempAge > 14) {
             tempAge %= 10;
         }
+
+        String suffix;
 
         switch (tempAge) {
             case 1:
