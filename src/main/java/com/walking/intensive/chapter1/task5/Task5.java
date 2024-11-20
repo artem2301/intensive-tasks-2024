@@ -12,9 +12,9 @@ import java.util.Arrays;
  */
 public class Task5 {
     public static void main(String[] args) {
-        double a = 5;
-        double b = 10;
-        double c = 7;
+        double a = 12;
+        double b = 13;
+        double c = 5;
 
         System.out.printf("Площадь по Герону: %.2f", getAreaByHeron(a, b, c));
         System.out.printf("\nПлощадь по т. Косинусов: %.2f", getAreaAdvanced(a, b, c));
@@ -69,9 +69,9 @@ public class Task5 {
             return -1;
         }
 
-        double p = getHalfPerimeter(a, b, c);
+        double halfPerimeter = getHalfPerimeter(a, b, c);
 
-        return Math.sqrt(p * (p - a) * (p - b) * (p - c));
+        return Math.sqrt(halfPerimeter * (halfPerimeter - a) * (halfPerimeter - b) * (halfPerimeter - c));
     }
 
     /**
@@ -88,11 +88,11 @@ public class Task5 {
             return new double[0];
         }
 
-        double ha = (2 * s) / a;
-        double hb = (2 * s) / b;
-        double hc = (2 * s) / c;
+        double heightA = (2 * s) / a;
+        double heightB = (2 * s) / b;
+        double heightC = (2 * s) / c;
 
-        double[] heights = new double[]{ha, hb, hc};
+        double[] heights = new double[]{heightA, heightB, heightC};
         Arrays.sort(heights);
 
         return heights;
@@ -110,11 +110,11 @@ public class Task5 {
             return new double[0];
         }
 
-        double ma = Math.sqrt(2 * (b * b + c * c) - a * a) / 2;
-        double mb = Math.sqrt(2 * (a * a + c * c) - b * b) / 2;
-        double mc = Math.sqrt(2 * (a * a + b * b) - c * c) / 2;
+        double medianA = Math.sqrt(2 * (b * b + c * c) - a * a) / 2;
+        double medianB = Math.sqrt(2 * (a * a + c * c) - b * b) / 2;
+        double medianC = Math.sqrt(2 * (a * a + b * b) - c * c) / 2;
 
-        double[] medians = new double[]{ma, mb, mc};
+        double[] medians = new double[]{medianA, medianB, medianC};
         Arrays.sort(medians);
 
         return medians;
@@ -132,11 +132,11 @@ public class Task5 {
             return new double[0];
         }
 
-        double la = Math.sqrt(b * c * (b + c + a) * (b + c - a)) / (b + c);
-        double lb = Math.sqrt(a * c * (a + c + b) * (a + c - b)) / (a + c);
-        double lc = Math.sqrt(a * b * (a + b + c) * (a + b - c)) / (a + b);
+        double bisectorA = Math.sqrt(b * c * (b + c + a) * (b + c - a)) / (b + c);
+        double bisectorB = Math.sqrt(a * c * (a + c + b) * (a + c - b)) / (a + c);
+        double bisectorC = Math.sqrt(a * b * (a + b + c) * (a + b - c)) / (a + b);
 
-        double[] bisectors = new double[]{la, lb, lc};
+        double[] bisectors = new double[]{bisectorA, bisectorB, bisectorC};
         Arrays.sort(bisectors);
 
         return bisectors;
@@ -180,9 +180,7 @@ public class Task5 {
             return -1;
         }
 
-        double p = getHalfPerimeter(a, b, c);
-
-        return Math.sqrt((p - a) * (p - b) * (p - c) / p);
+        return getAreaByHeron(a, b, c) / getHalfPerimeter(a, b, c);
     }
 
     /**
@@ -197,9 +195,7 @@ public class Task5 {
             return -1;
         }
 
-        double p = getHalfPerimeter(a, b, c);
-
-        return (a * b * c) / (4 * Math.sqrt(p * (p - a) * (p - b) * (p - c)));
+        return (a * b * c) / (4 * getAreaByHeron(a, b, c));
     }
 
     /**
