@@ -41,38 +41,32 @@ public class Task4 {
         }
 
         if (a == 0) {
-            double x;
+            double x = -c / b;
 
-            if (c == 0) {
-                x = c / b;
-            } else {
-                x = -c / b;
-            }
-
-            return "Количество решений: 1. Корень: " + (x + 0.0);
+            return "Количество решений: 1. Корень: " + x;
         }
 
-        double d = b * b - 4 * a * c;
+        double discriminant = b * b - 4 * a * c;
 
-        if (d < 0) {
+        if (discriminant < 0) {
             return "Количество решений: 0.";
         }
 
         double x1, x2;
 
-        if (d == 0) {
+        if (discriminant == 0) {
             x1 = -b / (2 * a);
 
             return "Количество решений: 1. Корень: " + (x1 + 0.0);
         }
 
-        x1 = (-b + Math.sqrt(d)) / (2 * a);
-        x2 = (-b - Math.sqrt(d)) / (2 * a);
+        x1 = (-b + Math.sqrt(discriminant)) / (2 * a);
+        x2 = (-b - Math.sqrt(discriminant)) / (2 * a);
 
         if (x2 < x1) {
-            double buf = x1;
+            double buffer = x1;
             x1 = x2;
-            x2 = buf;
+            x2 = buffer;
         }
 
         return "Количество решений: 2. Корни: " + (x1 + 0.0) + ";" + (x2 + 0.0);
