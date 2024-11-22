@@ -1,8 +1,6 @@
 package com.walking.intensive.chapter2.task6;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * Реализуйте представленные ниже методы для расчета
@@ -12,8 +10,8 @@ import java.util.List;
  */
 public class Task6 {
     public static void main(String[] args) {
-        int m = 128;
-        int n = 80;
+        int m = 115;
+        int n = 99;
 
         System.out.println("\nНаибольший общий делитель чисел " + m + " и " + n + ": " + getGcd(m, n));
         System.out.println("\nНаибольший общий делитель чисел  " + m + " и " + n + " по алгоритму Евклида: " + getGcdByEuclideanAlgorithm(m, n));
@@ -51,11 +49,20 @@ public class Task6 {
             return m;
         }
 
-        List<Integer> multipliersM = getMultipliersOfNumber(m);
-        List<Integer> multipliersN = getMultipliersOfNumber(n);
-        multipliersM.retainAll(multipliersN);
+        int[] multipliersM = getMultipliersOfNumber(m);
+        int[] multipliersN = getMultipliersOfNumber(n);
 
-        return Collections.max(multipliersM);
+        int[] shareMultipliers = new int[0];
+
+        for (int i = 0; i < multipliersM.length; i++) {
+            int shareElementIndex = Arrays.binarySearch(multipliersN, multipliersM[i]);
+
+            if (shareElementIndex >= 0) {
+                shareMultipliers = addElementInArray(shareMultipliers, multipliersN[shareElementIndex]);
+            }
+        }
+
+        return shareMultipliers[shareMultipliers.length - 1];
     }
 
     /**
@@ -82,19 +89,29 @@ public class Task6 {
         return m;
     }
 
-    private static List<Integer> getMultipliersOfNumber(int number) {
-        List<Integer> listOfMultipliers = new ArrayList<>();
+    private static int[] getMultipliersOfNumber(int number) {
+        int[] arrayOfMultipliers = new int[0];
 
         int multiplier = 1;
 
         while (multiplier <= number) {
-            if (number % multiplier == 0 && !listOfMultipliers.contains(multiplier))  {
-                listOfMultipliers.add(multiplier);
-            } else {
-                multiplier++;
+            if (number % multiplier == 0 && Arrays.binarySearch(arrayOfMultipliers, multiplier) < 0)  {
+                arrayOfMultipliers = addElementInArray(arrayOfMultipliers, multiplier);
             }
+
+            multiplier++;
         }
 
-        return listOfMultipliers;
+        return arrayOfMultipliers;
+    }
+
+    private static int[] addElementInArray(int[] array, int newElement) {
+        int[] newArray = new int[array.length + 1];
+
+        System.arraycopy(array, 0, newArray, 0, array.length);
+
+        newArray[newArray.length - 1] = newElement;
+
+        return newArray;
     }
 }
