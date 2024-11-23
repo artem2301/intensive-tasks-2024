@@ -42,7 +42,8 @@ public class Task7 {
             int bufferFriendlyNumber1 = getSumOfDivider(i, 1);
             int bufferFriendlyNumber2 = getSumOfDivider(bufferFriendlyNumber1, 1);
 
-            if (i == bufferFriendlyNumber2 && i != bufferFriendlyNumber1 && (i + bufferFriendlyNumber1) > (friendlyNumber1 + friendlyNumber2)) {
+            if (isFriendlyPair(i, bufferFriendlyNumber1, bufferFriendlyNumber2)
+                    && (i + bufferFriendlyNumber1) > (friendlyNumber1 + friendlyNumber2)) {
                 friendlyNumber1 = i;
                 friendlyNumber2 = bufferFriendlyNumber1;
             }
@@ -61,5 +62,10 @@ public class Task7 {
         }
 
         return getSumOfDivider(n, divider + 1);
+    }
+
+    private static boolean isFriendlyPair(int currentNumber, int number1, int number2) {
+        return currentNumber == number2 && currentNumber != number1;
+
     }
 }
