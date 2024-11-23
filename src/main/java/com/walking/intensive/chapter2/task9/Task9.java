@@ -51,11 +51,71 @@ package com.walking.intensive.chapter2.task9;
  */
 public class Task9 {
     public static void main(String[] args) {
-//        Для собственных проверок можете делать любые изменения в этом методе
+        System.out.println(getPascalTriangle(1));
     }
 
     static String getPascalTriangle(int n) {
-        // Ваш код
-        return null;
+        if (n < 1) {
+            return "";
+        }
+
+        int[] sequenceDigitsOfPascalTriangle = new int[0];
+        String[] strBuffer = new String[n];
+        String strPascalTriangle = "";
+
+        for (int i = 0; i < n; i++) {
+            sequenceDigitsOfPascalTriangle = getSequence(sequenceDigitsOfPascalTriangle);
+
+            for (int j = 0; j < sequenceDigitsOfPascalTriangle.length; j++) {
+                if (j == sequenceDigitsOfPascalTriangle.length - 1) {
+                    strPascalTriangle += sequenceDigitsOfPascalTriangle[j];
+                } else {
+                    strPascalTriangle += sequenceDigitsOfPascalTriangle[j] + " ";
+                }
+            }
+
+            strBuffer[i] = strPascalTriangle;
+
+            strPascalTriangle = "";
+        }
+
+        for (int i = 0; i < strBuffer.length; i++) {
+            strPascalTriangle +=  getFormatString(strBuffer[i], strBuffer[strBuffer.length - 1].length()) + "\n";
+        }
+
+        return strPascalTriangle;
+    }
+
+    private static int[] getSequence(int ... sequence) {
+        if (sequence.length == 0) {
+            return new int[] {1};
+        }
+
+        int[] bufferArray = new int[sequence.length + 1];
+        int sizeOfBufferArray = bufferArray.length;
+
+        bufferArray[0] = 1;
+        bufferArray[sizeOfBufferArray - 1] = 1;
+
+        int limit = sizeOfBufferArray % 2 == 0 ? sizeOfBufferArray / 2 : sizeOfBufferArray / 2 + 1;
+
+        for (int i = 1; i < limit; i++) {
+            bufferArray[i] = sequence[i-1] + sequence[i];
+            bufferArray[sizeOfBufferArray - 1 - i] = bufferArray[i];
+        }
+
+        return bufferArray;
+    }
+
+    private static String getFormatString(String sequence, int maxSymbolsCount) {
+        String paddings = "";
+
+        int paddingsCount = (maxSymbolsCount - sequence.length()) / 2;
+
+        for (int i = 0; i < paddingsCount; i++) {
+            paddings += " ";
+        }
+
+        return paddings + sequence;
     }
 }
