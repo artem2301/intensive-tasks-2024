@@ -1,5 +1,7 @@
 package com.walking.intensive.chapter2.task10;
 
+import java.util.Locale;
+
 /**
  * Реализуйте метод isPalindrome(), который проверяет, является ли строка палиндромом.
  *
@@ -11,11 +13,29 @@ package com.walking.intensive.chapter2.task10;
  */
 public class Task10 {
     public static void main(String[] args) {
-//        Для собственных проверок можете делать любые изменения в этом методе
+        System.out.println(isPalindrome("Муза! Ранясь шилом опыта, ты помолишься на разум."));
     }
 
     static boolean isPalindrome(String inputString) {
-        // Ваш код
-        return false;
+        if (inputString == null || inputString.isEmpty() || inputString.length() == 1) {
+            return false;
+        }
+
+        String formattedString = formatString(inputString);
+
+        for (int i = 0; i < formattedString.length() / 2; i++) {
+            if (!(formattedString.charAt(i) == formattedString.charAt(formattedString.length() - i - 1))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static String formatString(String str) {
+        str = str.replaceAll("\\pP", "");
+        str = str.replaceAll("\\s", "");
+
+        return str.toLowerCase(Locale.ROOT);
     }
 }
