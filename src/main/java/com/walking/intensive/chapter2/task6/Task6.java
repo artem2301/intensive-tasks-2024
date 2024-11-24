@@ -10,8 +10,8 @@ import java.util.Arrays;
  */
 public class Task6 {
     public static void main(String[] args) {
-        int m = 115;
-        int n = 99;
+        int m = 1236;
+        int n = 998;
 
         System.out.println("\nНаибольший общий делитель чисел " + m + " и " + n + ": " + getGcd(m, n));
         System.out.println("\nНаибольший общий делитель чисел  " + m + " и " + n + " по алгоритму Евклида: " + getGcdByEuclideanAlgorithm(m, n));
@@ -73,20 +73,21 @@ public class Task6 {
      *
      * <p>Если входные данные некорректны - метод должен возвращать -1.
      */
+
     static int getGcdByEuclideanAlgorithm(int m, int n) {
         if (m < 1 || n < 1) {
             return -1;
         }
 
-        while (m != n) {
-            if (m > n) {
-                m -= n;
-            } else {
-                n -= m;
-            }
+        if (m == n) {
+            return m;
         }
 
-        return m;
+        if (m > n) {
+            return getGcdByEuclideanAlgorithm(m - n, n);
+        }
+
+        return getGcdByEuclideanAlgorithm(m, n - m);
     }
 
     private static int[] getMultipliersOfNumber(int number) {
