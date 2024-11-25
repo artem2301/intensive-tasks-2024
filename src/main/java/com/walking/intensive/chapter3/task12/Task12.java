@@ -40,11 +40,57 @@ package com.walking.intensive.chapter3.task12;
  */
 public class Task12 {
     public static void main(String[] args) {
-//        Для собственных проверок можете делать любые изменения в этом методе
+        int[] result = getMovementsNumber("110");
+
+        for (int i = 0; i < result.length; i++) {
+            System.out.print(result[i] + " ");
+        }
     }
 
     static int[] getMovementsNumber(String baskets) {
-        // Ваш код
-        return new int[]{};
+        if (baskets == null || baskets.isEmpty() || !isCorrectString(baskets)) {
+            return new int[]{};
+        }
+
+        int[] resultArr = new int[baskets.length()];
+        int[] indexesOfBalls = getArrayOfOnesIndexes(baskets);
+
+        for (int i = 0; i < baskets.length(); i++) {
+            for (int j = 0; j < indexesOfBalls.length; j++) {
+                if (indexesOfBalls[j] != i) {
+                    resultArr[i] += Math.abs(i - indexesOfBalls[j]);
+                }
+            }
+        }
+
+        return resultArr;
+    }
+
+    private static boolean isCorrectString(String str) {
+        for (int i = 0; i < str.length(); i++) {
+            if (!(str.charAt(i) == '0' || str.charAt(i) == '1')) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static int[] getArrayOfOnesIndexes(String str) {
+        String indexesString = "";
+
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == '1') {
+                indexesString += i;
+            }
+        }
+
+        int[] result = new int[indexesString.length()];
+
+        for (int i = 0; i < indexesString.length(); i++) {
+            result[i] = Character.getNumericValue(indexesString.charAt(i));
+        }
+
+        return result;
     }
 }
