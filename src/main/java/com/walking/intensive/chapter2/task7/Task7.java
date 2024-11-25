@@ -66,6 +66,5 @@ public class Task7 {
 
     private static boolean isFriendlyPair(int currentNumber, int number1, int number2) {
         return currentNumber == number2 && currentNumber != number1;
-
     }
 }
