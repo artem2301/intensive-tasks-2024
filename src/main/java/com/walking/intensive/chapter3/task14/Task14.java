@@ -43,11 +43,70 @@ package com.walking.intensive.chapter3.task14;
  */
 public class Task14 {
     public static void main(String[] args) {
-//        Для собственных проверок можете делать любые изменения в этом методе
+        int[] result = getObjectCounts(getObjectLocations(), getRadarList());
+
+        for (int i = 0; i < result.length; i++) {
+            System.out.print(result[i] + " ");
+        }
     }
 
     static int[] getObjectCounts(int[][] objectLocations, int[][] radars) {
-        // Ваш код
-        return new int[0];
+        if (!isCorrectData(objectLocations, radars)) {
+            return new int[0];
+        }
+
+        int[] objectCounts = new int[radars.length];
+
+        double sumSquaresXY, squareRadius;
+
+        for (int i = 0; i < radars.length; i++) {
+            for (int j = 0; j < objectLocations.length; j++) {
+                sumSquaresXY = Math.pow(objectLocations[j][0] - radars[i][0], 2) + Math.pow(objectLocations[j][1] - radars[i][1], 2);
+                squareRadius = Math.pow(radars[i][2], 2);
+
+                if ((sumSquaresXY == squareRadius) || sumSquaresXY < squareRadius) {
+                    objectCounts[i]++;
+                }
+            }
+        }
+
+        return objectCounts;
+    }
+
+    private static boolean isCorrectData(int[][] objectLocations, int[][] radars) {
+        if (objectLocations == null || objectLocations.length == 0 || radars == null || radars.length == 0) {
+            return false;
+        }
+
+        for (int i = 0; i < objectLocations.length; i++) {
+            if (objectLocations[i].length != 2) {
+                return false;
+            }
+        }
+
+        for (int i = 0; i < radars.length; i++) {
+            if (radars[i].length != 3 || radars[i][2] < 1) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static int[][] getObjectLocations() {
+        return new int[][] {
+                {1, 3},
+                {3, 3},
+                {5, 3},
+                {2, 2}
+        };
+    }
+
+    private static int[][] getRadarList() {
+        return new int[][] {
+                {2, 3, 1},
+                {4, 3, 1},
+                {1, 1, 2}
+        };
     }
 }
