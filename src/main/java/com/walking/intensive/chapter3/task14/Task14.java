@@ -57,14 +57,17 @@ public class Task14 {
 
         int[] objectCounts = new int[radars.length];
 
-        double sumSquaresXY, squareRadius;
+        double squaresX;
+        double squaresY;
+        double squareRadius;
 
         for (int i = 0; i < radars.length; i++) {
             for (int j = 0; j < objectLocations.length; j++) {
-                sumSquaresXY = Math.pow(objectLocations[j][0] - radars[i][0], 2) + Math.pow(objectLocations[j][1] - radars[i][1], 2);
+                squaresX = Math.pow(objectLocations[j][0] - radars[i][0], 2);
+                squaresY = Math.pow(objectLocations[j][1] - radars[i][1], 2);
                 squareRadius = Math.pow(radars[i][2], 2);
 
-                if ((sumSquaresXY == squareRadius) || sumSquaresXY < squareRadius) {
+                if (squaresX + squaresY == squareRadius || squaresX + squaresY < squareRadius) {
                     objectCounts[i]++;
                 }
             }
