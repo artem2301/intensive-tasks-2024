@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class Task6 {
     public static void main(String[] args) {
         int m = 676;
-        int n = -2;
+        int n = 128;
 
         System.out.println("\nНаибольший общий делитель чисел " + m + " и " + n + ": " + getGcd(m, n));
         System.out.println("\nНаибольший общий делитель чисел  " + m + " и " + n + " по алгоритму Евклида: " + getGcdByEuclideanAlgorithm(m, n));
@@ -75,10 +75,6 @@ public class Task6 {
      */
 
     static int getGcdByEuclideanAlgorithm(int m, int n) {
-        if (m < 0 || n < 0) {
-            return -1;
-        }
-
         if (n == 0) {
             return m;
         }
