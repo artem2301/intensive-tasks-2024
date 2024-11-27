@@ -40,11 +40,88 @@ package com.walking.intensive.chapter3.task15;
  */
 public class Task15 {
     public static void main(String[] args) {
-//        Для собственных проверок можете делать любые изменения в этом методе
+        System.out.println(getMaxFloors(new int[][] {
+                {2, 1},
+                {1, 3}}));
     }
 
     static int getMaxFloors(int[][] city) {
-        // Ваш код
-        return 0;
+        if (!isCorrectArray(city)) {
+            return -1;
+        }
+
+        int[][] maxRowsAndColumns = new int[city.length][city.length];
+
+        for (int i = 0; i < city.length; i++) {
+            maxRowsAndColumns[0][i] = city[i][0];
+            maxRowsAndColumns[1][i] = city[0][i];
+
+            for (int j = 1; j < city[i].length; j++) {
+                if (city[i][j] > maxRowsAndColumns[0][i]) {
+                    maxRowsAndColumns[0][i] = city[i][j];
+                }
+            }
+
+            for (int j = 1; j < city.length; j++) {
+                if (city[j][i] > maxRowsAndColumns[1][i]) {
+                    maxRowsAndColumns[1][i] = city[j][i];
+                }
+            }
+        }
+
+        int min;
+        int count = 0;
+
+        for (int i = 0; i < city.length; i++) {
+            for (int j = 0; j < city[i].length; j++) {
+                min = Math.min(maxRowsAndColumns[0][i], maxRowsAndColumns[1][j]);
+
+                if (city[i][j] < min) {
+                    count += min - city[i][j];
+                }
+            }
+        }
+
+        return count;
+    }
+
+    private static boolean isCorrectArray(int[][] arr) {
+        return isCorrectArraySize(arr) && !isEmptyElements(arr) && isAllPositiveElements(arr);
+    }
+
+    private static boolean isAllPositiveElements(int[][] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                if (arr[i][j] < 0) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private static boolean isCorrectArraySize(int[][] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i].length != arr.length) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static boolean isEmptyElements(int[][] arr) {
+        if (arr.length < 1) {
+            return true;
+        }
+
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i].length < 1) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
