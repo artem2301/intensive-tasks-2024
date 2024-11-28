@@ -58,7 +58,6 @@ public class Task18 {
         int low = 0;
         int high = girlAges.length - 1;
         int middle = (high - low) / 2;
-        int resultAge = girlAges[middle];
 
         while (low <= high) {
             if (targetAge < girlAges[middle]) {
@@ -70,9 +69,8 @@ public class Task18 {
             }
 
             middle = ((high - low) / 2) + low;
-            resultAge = girlAges[middle - 1];
         }
 
-        return resultAge;
+        return girlAges[middle - 1];
     }
 }
