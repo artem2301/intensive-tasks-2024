@@ -1,5 +1,7 @@
 package com.walking.intensive.chapter4.task17;
 
+import java.util.Random;
+
 /**
  * Смауг, живущий в пещере с золотом, был заперт внутри горы.
  * Чтобы занять свое время, он развлекал себя следующей игрой.
@@ -21,7 +23,7 @@ package com.walking.intensive.chapter4.task17;
  */
 public class Task17 {
     public static void main(String[] args) {
-//        Для собственных проверок можете делать любые изменения в этом методе
+
     }
 
     /**
@@ -40,8 +42,25 @@ public class Task17 {
      * </ol>
      */
     static int[] sortByBubble(int[] array) {
-        // Ваш код
-        return new int[]{};
+        if (!isCorrectArray(array)) {
+            return new int[] {};
+        }
+
+        int buffer;
+
+        int[] sortedArray = array.clone();
+
+        for (int i = 0; i < sortedArray.length; i++) {
+            for (int j = 1; j < sortedArray.length - i; j++) {
+                if (sortedArray[j] < sortedArray[j - 1]) {
+                    buffer = sortedArray[j];
+                    sortedArray[j] = sortedArray[j - 1];
+                    sortedArray[j - 1] = buffer;
+                }
+            }
+        }
+
+        return sortedArray;
     }
     /**
      * Быстрая сортировка, она же QuickSort:
@@ -84,8 +103,38 @@ public class Task17 {
      * </ol>
      */
     static int[] sortByQuicksort(int[] array) {
-        // Ваш код
-        return new int[]{};
+        if (array == null) {
+            return new int[] {};
+        }
+
+        if (array.length < 2 ||  isEqualElements(array)) {
+            return array;
+        }
+
+        if (array.length == 2) {
+            if (array[0] > array[1]) {
+                int buffer = array[0];
+                array[0] = array[1];
+                array[1] = buffer;
+            }
+
+            return array;
+        }
+
+        int baseElement = (getMax(array) + getMin(array)) / 2;
+
+        int[] leftArray = new int[] {};
+        int[] rightArray = new int[] {};
+
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] < baseElement) {
+                leftArray = add(leftArray, array[i]);
+            } else {
+                rightArray = add(rightArray, array[i]);
+            }
+        }
+
+        return getUnionArray(sortByQuicksort(leftArray), sortByQuicksort(rightArray));
     }
 
     /**
@@ -97,15 +146,105 @@ public class Task17 {
      * Время выполнения - разность времени после работы алгоритма и времени до работы алгоритма
      */
     static long getBenchmarkOn1000() {
-        // Ваш код
-        return 0;
+        int[] arr = getRandomArray(1000, 10000);
+
+        long algorithmTimeBefore = System.currentTimeMillis();
+
+        sortByBubble(arr);
+
+        long algorithmTimeAfter = System.currentTimeMillis();
+
+        return algorithmTimeAfter - algorithmTimeBefore;
     }
 
     /**
      * Повторите предыдущие вычисления из метода getBenchmarkOn1000() для массива в 10 000 элементов.
      */
     static long getBenchmarkOn10000() {
-        // Ваш код
-        return 0;
+        int[] arr = getRandomArray(10000, 1000);
+
+        long algorithmTimeBefore = System.currentTimeMillis();
+
+        sortByBubble(arr);
+
+        long algorithmTimeAfter = System.currentTimeMillis();
+
+        return algorithmTimeAfter - algorithmTimeBefore;
+    }
+
+    private static boolean isCorrectArray(int[] arr) {
+        return arr != null && arr.length > 1;
+    }
+
+    private static int[] getRandomArray(int arraySize, int range) {
+        int[] result = new int[arraySize];
+
+        Random rand = new Random();
+
+        for (int i = 0; i < result.length; i++) {
+            result[i] = rand.nextInt(range);
+        }
+
+        return result;
+    }
+
+    private static int getMax(int[] arr) {
+        int max = arr[0];
+
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+
+        return max;
+    }
+
+    private static int getMin(int[] arr) {
+        int min = arr[0];
+
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] < min) {
+                min = arr[i];
+            }
+        }
+
+        return min;
+    }
+
+    private static int[] add(int[] arr, int value) {
+        int[] result = new int[arr.length + 1];
+
+        for (int i = 0; i < arr.length; i++) {
+            result[i] = arr[i];
+        }
+
+        result[result.length - 1] = value;
+
+        return result;
+    }
+
+    private static int[] getUnionArray(int[] arr1, int[] arr2) {
+        int[] result = new int[arr1.length + arr2.length];
+        
+        for (int i = 0; i < arr1.length; i++) {
+            result[i] = arr1[i];
+        }
+        
+        for (int i = 0; i < arr2.length; i++) {
+            result[arr1.length + i] = arr2[i];
+        }
+        
+        return result;
+    }
+
+    private static boolean isEqualElements(int[] arr) {
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i - 1] != arr[i]) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
