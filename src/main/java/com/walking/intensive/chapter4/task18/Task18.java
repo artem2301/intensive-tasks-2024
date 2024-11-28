@@ -19,7 +19,7 @@ package com.walking.intensive.chapter4.task18;
  */
 public class Task18 {
     public static void main(String[] args) {
-//        Для собственных проверок можете делать любые изменения в этом методе
+        System.out.println(find(new int[]{1, 3, 5, 7, 8, 11, 13}, 8));
     }
 
     /**
@@ -51,7 +51,26 @@ public class Task18 {
      * </ul>
      */
     static int find(int[] girlAges, int targetAge) {
-        // Ваш код
-        return 0;
+        if (girlAges == null || girlAges.length < 1) {
+            return -1;
+        }
+
+        int low = 0;
+        int high = girlAges.length - 1;
+        int middle = (high - low) / 2;
+
+        while (low <= high) {
+            if (targetAge < girlAges[middle]) {
+                high = middle - 1;
+            } else if (targetAge > girlAges[middle]) {
+                low = middle + 1;
+            } else {
+                return girlAges[middle];
+            }
+
+            middle = ((high - low) / 2) + low;
+        }
+
+        return girlAges[middle];
     }
 }
