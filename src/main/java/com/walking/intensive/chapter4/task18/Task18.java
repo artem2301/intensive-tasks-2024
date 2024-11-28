@@ -19,7 +19,7 @@ package com.walking.intensive.chapter4.task18;
  */
 public class Task18 {
     public static void main(String[] args) {
-        System.out.println(find(new int[]{1, 3, 5, 7, 8, 11, 13}, 8));
+        System.out.println(find(new int[]{1, 8, 10, 20, 30, 40, 45}, 41));
     }
 
     /**
@@ -58,6 +58,7 @@ public class Task18 {
         int low = 0;
         int high = girlAges.length - 1;
         int middle = (high - low) / 2;
+        int resultAge = girlAges[middle];
 
         while (low <= high) {
             if (targetAge < girlAges[middle]) {
@@ -69,8 +70,9 @@ public class Task18 {
             }
 
             middle = ((high - low) / 2) + low;
+            resultAge = girlAges[middle - 1];
         }
 
-        return girlAges[middle];
+        return resultAge;
     }
 }
