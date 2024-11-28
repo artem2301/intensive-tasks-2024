@@ -51,13 +51,13 @@ public class Task18 {
      * </ul>
      */
     static int find(int[] girlAges, int targetAge) {
-        if (girlAges == null || girlAges.length < 1) {
+        if (!isValidArray(girlAges)) {
             return -1;
         }
 
         int low = 0;
         int high = girlAges.length - 1;
-        int middle = (high - low) / 2;
+        int middle = high / 2;
 
         while (low <= high) {
             if (targetAge < girlAges[middle]) {
@@ -68,9 +68,23 @@ public class Task18 {
                 return girlAges[middle];
             }
 
-            middle = ((high - low) / 2) + low;
+            middle = (high - low) / 2 + low;
         }
 
         return girlAges[middle - 1];
+    }
+
+    private static boolean isValidArray(int[] arr) {
+        if (arr == null || arr.length < 1) {
+            return false;
+        }
+
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] < 0) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
