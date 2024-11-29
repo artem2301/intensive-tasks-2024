@@ -1,5 +1,6 @@
 package com.walking.intensive.chapter4.task17;
 
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -23,7 +24,8 @@ import java.util.Random;
  */
 public class Task17 {
     public static void main(String[] args) {
-
+        System.out.println(getBenchmarkOn10000());
+        System.out.println(getBenchmarkOn1000());
     }
 
     /**
@@ -48,6 +50,8 @@ public class Task17 {
 
         int buffer;
 
+        boolean isChanged = false;
+
         int[] sortedArray = array.clone();
 
         for (int i = 0; i < sortedArray.length; i++) {
@@ -56,7 +60,12 @@ public class Task17 {
                     buffer = sortedArray[j];
                     sortedArray[j] = sortedArray[j - 1];
                     sortedArray[j - 1] = buffer;
+                    isChanged = true;
                 }
+            }
+
+            if (!isChanged) {
+                break;
             }
         }
 
@@ -123,18 +132,28 @@ public class Task17 {
 
         int baseElement = (getMax(array) + getMin(array)) / 2;
 
-        int[] leftArray = new int[] {};
-        int[] rightArray = new int[] {};
+        int i = 0;
+        int j = array.length - 1;
 
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] < baseElement) {
-                leftArray = add(leftArray, array[i]);
-            } else {
-                rightArray = add(rightArray, array[i]);
+        while (i <= j) {
+            while (array[i] < baseElement) {
+                i++;
+            }
+
+            while (array[j] > baseElement) {
+                j--;
+            }
+
+            if (i <= j) {
+                int buffer = array[i];
+                array[i] = array[j];
+                array[j] = buffer;
+                i++;
+                j--;
             }
         }
 
-        return getUnionArray(sortByQuicksort(leftArray), sortByQuicksort(rightArray));
+        return getUnionArray(sortByQuicksort(Arrays.copyOfRange(array, 0, i)), sortByQuicksort(Arrays.copyOfRange(array, i, array.length)));
     }
 
     /**
@@ -150,7 +169,7 @@ public class Task17 {
 
         long algorithmTimeBefore = System.currentTimeMillis();
 
-        sortByBubble(arr);
+        sortByQuicksort(arr);
 
         long algorithmTimeAfter = System.currentTimeMillis();
 
