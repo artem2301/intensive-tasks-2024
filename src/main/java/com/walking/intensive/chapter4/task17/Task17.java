@@ -24,6 +24,8 @@ import java.util.Random;
  */
 public class Task17 {
     public static void main(String[] args) {
+        System.out.println(Arrays.toString(sortByQuicksort(new int[]{1, 2, 4, 0, -1, -10, -20})));
+
         System.out.println(getBenchmarkOn10000());
         System.out.println(getBenchmarkOn1000());
     }
@@ -111,6 +113,7 @@ public class Task17 {
      *      Если длина входного массива меньше двух, выходим.
      * </ol>
      */
+
     static int[] sortByQuicksort(int[] array) {
         if (array == null) {
             return new int[] {};
@@ -130,10 +133,20 @@ public class Task17 {
             return array;
         }
 
-        int baseElement = (getMax(array) + getMin(array)) / 2;
+        sortByQuicksort(array, 0, array.length);
 
-        int i = 0;
-        int j = array.length - 1;
+        return array;
+    }
+
+    private static void sortByQuicksort(int[] array, int low, int high){
+        if (low >= high) {
+            return;
+        }
+
+        int baseElement = (getMax(array, low, high) + getMin(array, low, high)) / 2;
+
+        int i = low;
+        int j = high - 1;
 
         while (i <= j) {
             while (array[i] < baseElement) {
@@ -153,7 +166,8 @@ public class Task17 {
             }
         }
 
-        return getUnionArray(sortByQuicksort(Arrays.copyOfRange(array, 0, i)), sortByQuicksort(Arrays.copyOfRange(array, i, array.length)));
+        sortByQuicksort(array, low, j + 1);
+        sortByQuicksort(array, i, high);
     }
 
     /**
@@ -184,7 +198,7 @@ public class Task17 {
 
         long algorithmTimeBefore = System.currentTimeMillis();
 
-        sortByBubble(arr);
+        sortByQuicksort(arr);
 
         long algorithmTimeAfter = System.currentTimeMillis();
 
@@ -207,10 +221,10 @@ public class Task17 {
         return result;
     }
 
-    private static int getMax(int[] arr) {
-        int max = arr[0];
+    private static int getMax(int[] arr, int start, int end) {
+        int max = arr[start];
 
-        for (int i = 1; i < arr.length; i++) {
+        for (int i = start + 1; i < end - start; i++) {
             if (arr[i] > max) {
                 max = arr[i];
             }
@@ -219,10 +233,10 @@ public class Task17 {
         return max;
     }
 
-    private static int getMin(int[] arr) {
-        int min = arr[0];
+    private static int getMin(int[] arr, int start, int end) {
+        int min = arr[start];
 
-        for (int i = 1; i < arr.length; i++) {
+        for (int i = start + 1; i < end - start; i++) {
             if (arr[i] < min) {
                 min = arr[i];
             }
