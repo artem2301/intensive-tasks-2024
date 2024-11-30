@@ -245,32 +245,6 @@ public class Task17 {
         return min;
     }
 
-    private static int[] add(int[] arr, int value) {
-        int[] result = new int[arr.length + 1];
-
-        for (int i = 0; i < arr.length; i++) {
-            result[i] = arr[i];
-        }
-
-        result[result.length - 1] = value;
-
-        return result;
-    }
-
-    private static int[] getUnionArray(int[] arr1, int[] arr2) {
-        int[] result = new int[arr1.length + arr2.length];
-        
-        for (int i = 0; i < arr1.length; i++) {
-            result[i] = arr1[i];
-        }
-        
-        for (int i = 0; i < arr2.length; i++) {
-            result[arr1.length + i] = arr2[i];
-        }
-        
-        return result;
-    }
-
     private static boolean isEqualElements(int[] arr) {
         for (int i = 1; i < arr.length; i++) {
             if (arr[i - 1] != arr[i]) {
