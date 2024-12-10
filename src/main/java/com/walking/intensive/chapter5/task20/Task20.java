@@ -67,6 +67,10 @@ public class Task20 {
         return result;
     }
 
+    private static int getDeterminantSize2(int[][] matrix) {
+        return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+    }
+
     /**
      * Входное значение - валидируемая матрица, представленная в виде двумерного массива.
      *
@@ -75,8 +79,18 @@ public class Task20 {
      * <p>Логика валидации должна быть определена в этом методе, чтобы не усложнять логику getDeterminant(). При этом
      * getDeterminant() должен использовать isValid().
      */
-    private static int getDeterminantSize2(int[][] matrix) {
-        return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+    static boolean isValid(int[][] matrix) {
+        if (matrix == null) {
+            return false;
+        }
+
+        for (int i = 0; i < matrix.length; i++) {
+            if (matrix[i].length != matrix.length) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private static int[][] getNewArray(int[][] matrix, int y) {
@@ -99,19 +113,5 @@ public class Task20 {
         }
 
         return buffer;
-    }
-
-    static boolean isValid(int[][] matrix) {
-        if (matrix == null) {
-            return false;
-        }
-
-        for (int i = 0; i < matrix.length; i++) {
-            if (matrix[i].length != matrix.length) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }
